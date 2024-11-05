@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Dokumentų Sąrašas{% endblock %}
+
+{% block content %}
+
+<h2>Dokumentų sąrašas</h2>
+<table>
+    <tr>
+        <th>Dokumento numeris</th>
+        <th>Krovinio pavadinimas</th>
+        <th>Kiekis</th>
+        <th>Veiksmai</th>
+    </tr>
+    {% for document in documents %}
+    <tr>
+        <td>{{ document.document_number }}</td>
+        <td>{{ document.cargo_name }}</td>
+        <td>{{ document.quantity }}</td>
+        <td>
+            <a href="{% url 'document_update' document.pk %}">Redaguoti</a>
+            {% if request.user.is_staff %}
+                <a href="{% url 'document_delete' document.pk %}">Ištrinti</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+    <td colspan="4">Nėra sukurtų dokumentų.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

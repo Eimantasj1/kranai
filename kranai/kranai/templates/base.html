@@ -4,3 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Dokumentų Valdymo Sistema{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Dokumentų Valdymo Sistema</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'document_list' %}">Dokumentų Sąrašas</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'document_create' %}">Naujas Dokumentas</a></li>
+                    <li><a href="{% url 'logout' %}">Atsijungti</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Prisijungti</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
