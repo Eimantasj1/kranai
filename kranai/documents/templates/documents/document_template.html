@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Krovinio Važtaraštis Nr. {{ document.document_number }}{% endblock %}
+
+{% block content %}
+<div class="document-container">
+    <h2>KROVINIŲ VAŽTARAŠTIS Nr. {{ document.document_number }}</h2>
+    <p><strong>Data:</strong> {{ document.created_at|date:"Y-m-d" }}</p>
+
+    <section class="info-section">
+        <p><strong>Krovinio siuntėjas:</strong> {{ document.sender }}</p>
+        <p><strong>Krovinio gavėjas:</strong> {{ document.receiver }}</p>
+        <p><strong>Adresas:</strong> {{ document.address }}</p>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Eil. Nr.</th>
+                <th>Krovinio pavadinimas</th>
+                <th>Kiekis (litrais arba kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in document.items.all %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Nėra įrašų</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <section class="vehicle-info">
+        <p><strong>Automobilio markė:</strong> {{ document.vehicle_make }}</p>
+        <p><strong>Valstybinis numeris:</strong> {{ document.vehicle_plate }}</p>
+    </section>
+
+    <section class="location-info">
+        <p><strong>Krovinio pakrovimo vieta:</strong> {{ document.load_location }}</p>
+        <p><strong>Krovinio iškrovimo vieta:</strong> {{ document.unload_location }}</p>
+    </section>
+
+    <section class="driver-info">
+        <p><strong>Vairuotojo vardas ir pavardė:</strong> {{ document.driver_name }}</p>
+    </section>
+
+    <section class="signature-section">
+        <p><strong>Direktorius:</strong> Dalius Kuiberis</p>
+        <p><em>(Pasirašančio asmens parašas, pareigos, vardas, pavardė)</em></p>
+    </section>
+</div>
+{% endblock %}

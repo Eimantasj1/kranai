@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Dokumento Informacija{% endblock %}
+
+{% block content %}
+<h2>Dokumento Informacija</h2>
+<h2>Dokumento Informacija</h2>
+<p><strong>Dokumento numeris:</strong> {{ document.document_number }}</p>
+<p><strong>Krovinio pavadinimas:</strong> {{ document.cargo_name }}</p>
+<p><strong>Kiekis:</strong> {{ document.quantity }}</p>
+<p><strong>Automobilio markė:</strong> {{ document.vehicle_make }}</p>
+<p><strong>Valstybinis numeris:</strong> {{ document.vehicle_plate }}</p>
+<p><strong>Pakrovimo vieta:</strong> {{ document.load_location }}</p>
+<p><strong>Iškrovimo vieta:</strong> {{ document.unload_location }}</p>
+<p><strong>Vairuotojo vardas:</strong> {{ document.driver_name }}</p>
+<a href="{% url 'document_list' %}">Atgal į sąrašą</a>
+{% endblock %}

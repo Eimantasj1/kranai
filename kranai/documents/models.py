@@ -16,7 +16,8 @@ class Document(models.Model):
     vehicle_make = models.CharField("Automobilio markė", max_length=100)
     vehicle_plate = models.CharField("Valstybinis numeris", max_length=20)
     load_location =models.CharField("Pakrovimo vieta", max_length=255)
-    unload_location = models.CharField("Vairuotojo vardas, pavardė", max_length=255)
+    unload_location =models.CharField("Iškrovimo vieta", max_length=255)
+    driver_name = models.CharField("Vairuotojo vardas, pavardė", max_length=255, default="")
 
     def __str__(self):
-        return f"Dokumentas {self.document_number}"
+        return f"Dokumentas {self.document_number} ({self.cargo_name})"

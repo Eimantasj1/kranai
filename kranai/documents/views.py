@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Document
 from .forms import DocumentForm
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 @login_required
@@ -26,7 +29,7 @@ def document_create(request):
             return redirect('document_list')
     else:
         form = DocumentForm()
-    return render(request, ' documents/document_form.html', {'form': form})
+    return render(request, 'documents/document_form.html', {'form': form})
 
 
 @login_required
