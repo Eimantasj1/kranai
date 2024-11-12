@@ -18,6 +18,7 @@
         <td>{{ document.cargo_name }}</td>
         <td>{{ document.quantity }}</td>
         <td>
+            <a href="{% url 'document_pdf' document.pk %}">Spausdinti / Atsisiųsti PDF</a>
             <a href="{% url 'document_update' document.pk %}">Redaguoti</a>
             {% if request.user.is_staff %}
                 <a href="{% url 'document_delete' document.pk %}">Ištrinti</a>

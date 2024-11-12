@@ -1,8 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Krovinio Važtaraštis Nr. {{ document.document_number }}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'documents/document_style.css' %}">
+
 <div class="document-container">
     <h2>KROVINIŲ VAŽTARAŠTIS Nr. {{ document.document_number }}</h2>
     <p><strong>Data:</strong> {{ document.created_at|date:"Y-m-d" }}</p>
@@ -50,7 +53,7 @@
         <p><strong>Vairuotojo vardas ir pavardė:</strong> {{ document.driver_name }}</p>
     </section>
 
-    <section class="signature-section">
+    <section class="signature">
         <p><strong>Direktorius:</strong> Dalius Kuiberis</p>
         <p><em>(Pasirašančio asmens parašas, pareigos, vardas, pavardė)</em></p>
     </section>

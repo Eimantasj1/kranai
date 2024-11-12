@@ -8,6 +8,26 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 
+# PDF generavimas
+@login_required
+def render_pdf_view(request, pk):
+    document = get_object_or_404(Document, pk=pk)
+    template_path = 'documents/document_template.html'
+    context = {'document': document}
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="document.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('PDF generavimo klaida: <pre>' + html + '</pre>')
+    return response
+
+
+
 @login_required
 def document_list(request):
     #Tik administratoriai matys visus dokumentus, kiti matys tik savo
