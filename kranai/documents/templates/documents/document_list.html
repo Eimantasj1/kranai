@@ -17,11 +17,11 @@
         <td>{{ document.document_number }}</td>
         <td>{{ document.cargo_name }}</td>
         <td>{{ document.quantity }}</td>
-        <td>
-            <a href="{% url 'document_pdf' document.pk %}">Spausdinti / Atsisiųsti PDF</a>
-            <a href="{% url 'document_update' document.pk %}">Redaguoti</a>
+        <td class ="actions">
+            <a href="{% url 'document_pdf' document.pk %}" class="print">Spausdinti / Atsisiųsti PDF</a>
+            <a href="{% url 'document_update' document.pk %}" class="edit">Redaguoti</a>
             {% if request.user.is_staff %}
-                <a href="{% url 'document_delete' document.pk %}">Ištrinti</a>
+                <a href="{% url 'document_delete' document.pk %}" class="delete">Ištrinti</a>
             {% endif %}
         </td>
     </tr>

@@ -18,12 +18,21 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from documents import views as document_views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Autentifikavimo maršrutai
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),  # Prisijungimo langas
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),  # Atsijungimas
+
+    # Po prisijungimo vartotojai bus nukreipiami į dokumentų sąrašą
     path('documents/', include('documents.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('', document_views.document_list, name='home'),
+
+    # Administratoriaus valdymo sąsaja
+    path('admin/', admin.site.urls),
+
+    # Pagrindinis puslapis nukreipia į prisijungimo langą
+    path('', auth_views.LoginView.as_view(), name='home'),
 ]
 
 if settings.DEBUG:

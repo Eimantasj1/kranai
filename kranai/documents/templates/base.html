@@ -1,29 +1,35 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dokumentų Valdymo Sistema{% endblock %}</title>
+    <title>Dokumentų Valdymo Sistema</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
-<body>
+<body class="light-mode">
     <header>
         <h1>Dokumentų Valdymo Sistema</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'document_list' %}">Dokumentų Sąrašas</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'document_create' %}">Naujas Dokumentas</a></li>
-                    <li><a href="{% url 'logout' %}">Atsijungti</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Prisijungti</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+        <span class="toggle-theme" onclick="toggleTheme()">🌙</span>
     </header>
+    {% if user.is_authenticated %}
+    <nav>
+        <ul>
+            <li><a href="{% url 'document_list' %}">Dokumentų Sąrašas</a></li>
+            <li><a href="{% url 'document_create' %}">Naujas Dokumentas</a></li>
+            <li><a href="{% url 'logout' %}">Atsijungti</a></li>
+        </ul>
+    </nav>
+    {% endif %}
     <main>
         {% block content %}{% endblock %}
     </main>
+    <footer>
+        © 2024 Dokumentų Valdymo Sistema
+    </footer>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+        }
+    </script>
 </body>
 </html>
