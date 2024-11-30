@@ -1,61 +1,75 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
 {% load static %}
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokumentas</title>
+    <link rel="stylesheet" href="/static/document_style.css">
+</head>
+<body>
+    <div class="document-container">
+        <header>
+            <h1>AUTOMOBILINIO KRANO, ATLIKTŲ DARBŲ AKTAS</h1>
+            <p>Kėdainių Kranai</p>
+            <p>Juodkaimių k., Parko g. 20, Kėdainių r. sav.</p>
+            <p>Tel.: (8~675) 94329</p>
+        </header>
 
-{% block title %}Krovinio Važtaraštis Nr. {{ document.document_number }}{% endblock %}
+        <section class="details">
+            <table>
+                <tr>
+                    <th>Krano markė/modelis</th>
+                    <td>{{ document.model }}</td>
+                    <th>Valstybinis Nr.</th>
+                    <td>{{ document.registration_number }}</td>
+                </tr>
+                <tr>
+                    <th>Nuomotojo įrangą pristatęs asmuo</th>
+                    <td>{{ document.sender_name }}</td>
+                    <th>Nuomininko įrangą priėmęs asmuo</th>
+                    <td>{{ document.receiver_name }}</td>
+                </tr>
+                <tr>
+                    <th>Keliamoji galia</th>
+                    <td>{{ document.lifting_capacity }}</td>
+                    <th>Telefonas</th>
+                    <td>{{ document.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Paros kaina</th>
+                    <td>{{ document.daily_price }}</td>
+                    <th>El. paštas</th>
+                    <td>{{ document.email }}</td>
+                </tr>
+            </table>
+        </section>
 
-{% block content %}
-<link rel="stylesheet" href="{% static 'documents/document_style.css' %}">
+        <section class="client-info">
+            <h2>Užsakovo informacija</h2>
+            <table>
+                <tr>
+                    <th>Užsakovas</th>
+                    <td>{{ document.client_name }}</td>
+                    <th>Objekto adresas</th>
+                    <td>{{ document.project_address }}</td>
+                </tr>
+                <tr>
+                    <th>Kilometro kaina</th>
+                    <td>{{ document.km_price }}</td>
+                    <th>Pravažiuota kilometrų</th>
+                    <td>{{ document.distance }}</td>
+                </tr>
+                <tr>
+                    <th>Dirbta parų</th>
+                    <td>{{ document.days_worked }}</td>
+                </tr>
+            </table>
+        </section>
 
-<div class="document-container">
-    <h2>KROVINIŲ VAŽTARAŠTIS Nr. {{ document.document_number }}</h2>
-    <p><strong>Data:</strong> {{ document.created_at|date:"Y-m-d" }}</p>
-
-    <section class="info-section">
-        <p><strong>Krovinio siuntėjas:</strong> {{ document.sender }}</p>
-        <p><strong>Krovinio gavėjas:</strong> {{ document.receiver }}</p>
-        <p><strong>Adresas:</strong> {{ document.address }}</p>
-    </section>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Eil. Nr.</th>
-                <th>Krovinio pavadinimas</th>
-                <th>Kiekis (litrais arba kg)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in document.items.all %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.quantity }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3">Nėra įrašų</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <section class="vehicle-info">
-        <p><strong>Automobilio markė:</strong> {{ document.vehicle_make }}</p>
-        <p><strong>Valstybinis numeris:</strong> {{ document.vehicle_plate }}</p>
-    </section>
-
-    <section class="location-info">
-        <p><strong>Krovinio pakrovimo vieta:</strong> {{ document.load_location }}</p>
-        <p><strong>Krovinio iškrovimo vieta:</strong> {{ document.unload_location }}</p>
-    </section>
-
-    <section class="driver-info">
-        <p><strong>Vairuotojo vardas ir pavardė:</strong> {{ document.driver_name }}</p>
-    </section>
-
-    <section class="signature">
-        <p><strong>Direktorius:</strong> Dalius Kuiberis</p>
-        <p><em>(Pasirašančio asmens parašas, pareigos, vardas, pavardė)</em></p>
-    </section>
-</div>
-{% endblock %}
+        <footer>
+            <p>Nuomininko vardu: ____________________</p>
+            <p>Nuomotojo vardu: ____________________</p>
+        </footer>
+    </div>
+</body>
+</html>

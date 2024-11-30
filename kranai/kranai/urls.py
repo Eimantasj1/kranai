@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     # Autentifikavimo maršrutai
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),  # Prisijungimo langas
-    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),  # Atsijungimas
+    path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
 
     # Po prisijungimo vartotojai bus nukreipiami į dokumentų sąrašą
     path('documents/', include('documents.urls')),

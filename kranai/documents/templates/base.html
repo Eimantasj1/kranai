@@ -1,10 +1,5 @@
 {% load static %}
-<<<<<<< HEAD
 <html lang="en">
-=======
-<!DOCTYPE html>
-<html lang="lt">
->>>>>>> a1f94256f48ab7eabb2f9160f58f97f8b302594f
 <head>
     <meta charset="UTF-8">
     <title>Dokumentų Valdymo Sistema</title>
@@ -13,23 +8,22 @@
 <body class="light-mode">
     <header>
         <h1>Dokumentų Valdymo Sistema</h1>
-        <span class="toggle-theme" onclick="toggleTheme()">🌙</span>
+        <div class="header-controls">
+            {% if user.is_authenticated %}
+                <span class="user-info">Sveiki, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="logout-btn">Atsijungti</a>
+            {% endif %}
+            <span class="toggle-theme" onclick="toggleTheme()">🌙</span>
+        </div>
     </header>
-<<<<<<< HEAD
     {% if user.is_authenticated %}
-=======
->>>>>>> a1f94256f48ab7eabb2f9160f58f97f8b302594f
     <nav>
         <ul>
             <li><a href="{% url 'document_list' %}">Dokumentų Sąrašas</a></li>
             <li><a href="{% url 'document_create' %}">Naujas Dokumentas</a></li>
-            <li><a href="{% url 'logout' %}">Atsijungti</a></li>
         </ul>
     </nav>
-<<<<<<< HEAD
     {% endif %}
-=======
->>>>>>> a1f94256f48ab7eabb2f9160f58f97f8b302594f
     <main>
         {% block content %}{% endblock %}
     </main>

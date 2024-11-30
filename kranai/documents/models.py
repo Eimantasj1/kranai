@@ -2,22 +2,26 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
-
 class Document(models.Model):
     document_number = models.CharField(max_length=100)
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    cargo_name = models.CharField(max_length=255)
+    quantity = models.PositiveIntegerField()
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="documents"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    #dokumento laukai
-    cargo_name = models.CharField("Krovinio pavadinimas", max_length=225)
-    quantity = models.FloatField("Kiekis litrais arba kg")
-    vehicle_make = models.CharField("Automobilio markė", max_length=100)
-    vehicle_plate = models.CharField("Valstybinis numeris", max_length=20)
-    load_location =models.CharField("Pakrovimo vieta", max_length=255)
-    unload_location =models.CharField("Iškrovimo vieta", max_length=255)
-    driver_name = models.CharField("Vairuotojo vardas, pavardė", max_length=255, default="")
-
-    def __str__(self):
-        return f"Dokumentas {self.document_number} ({self.cargo_name})"
+    # Papildomi laukeliai
+    model = models.CharField(max_length=255, blank=True, null=True)
+    registration_number = models.CharField(max_length=100, blank=True, null=True)
+    sender_name = models.CharField(max_length=255, blank=True, null=True)
+    receiver_name = models.CharField(max_length=255, blank=True, null=True)
+    lifting_capacity = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    daily_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    client_name = models.CharField(max_length=255, blank=True, null=True)
+    km_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    project_address = models.CharField(max_length=255, blank=True, null=True)
+    distance = models.PositiveIntegerField(blank=True, null=True)
+    days_worked = models.PositiveIntegerField(blank=True, null=True)
