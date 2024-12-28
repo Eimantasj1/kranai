@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Pasirinkite Dokumento Tipą{% endblock %}
+
+{% block content %}
+<div class="document-select-container">
+    <h2 class="document-select-title">Pasirinkite Dokumento Tipą</h2>
+    <div class="document-select-buttons">
+        <a href="{% url 'document_create_freight' %}" class="document-btn">Krovinio Važtaraštis</a>
+        <a href="{% url 'document_create_platform' %}" class="document-btn">Mobilios Alkūninės Platformos Aktas</a>
+    </div>
+</div>
+{% endblock %}

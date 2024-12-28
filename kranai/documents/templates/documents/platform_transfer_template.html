@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobilios Alkūninės Platformos Priėmimo-Perdavimo Aktas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px;
+            color: #000;
+        }
+        h1 {
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        .header-table {
+            margin-bottom: 20px;
+        }
+        .header-table td {
+            text-align: left;
+        }
+        .signatures {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mobilios Alkūninės Darbo Platformos, Priėmimo - Perdavimo Aktas</h1>
+
+    <table class="header-table">
+        <tr>
+            <td colspan="3">Kėdainių r. sav. Juodkaimių k. Parko g. 20 | Įm. kodas 302742708 | PVM kodas LT100006728717 | Tel. (8-675) 94329</td>
+        </tr>
+        <tr>
+            <td><strong>Markė/Modelis:</strong> {{ document.model }}</td>
+            <td><strong>Valstybinis Nr.:</strong> {{ document.registration_number }}</td>
+            <td><strong>Atsakingas asmuo:</strong> {{ document.created_by.username }}</td>
+        </tr>
+        <tr>
+            <td><strong>Pristatymo data:</strong> {{ document.created_at|date:"Y-m-d" }}</td>
+            <td><strong>Telefono numeris:</strong> +370 62225212</td>
+            <td><strong>El. paštas:</strong> deimantas.sabalaukas@cramo.com</td>
+        </tr>
+        <tr>
+            <td><strong>Kilometro kaina:</strong> 0,85 Eur + PVM</td>
+            <td><strong>Užsakovo kodas:</strong> PVM10000104515</td>
+            <td><strong>Pravažiuota kilometrų:</strong> 148</td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nuomos pradžios / pabaigos data</th>
+                <th>Objekto pavadinimas, adresas, pašto kodas</th>
+                <th>Pravažiuota kilometrų</th>
+                <th>Pristatymas / Išvežimas</th>
+                <th>Dirbta parų</th>
+                <th>Atsakingas asmuo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2024.09.16 / 2024.09.24</td>
+                <td>Kėdainiai Juodkiškio g., 48 - Vasario 16-osios g., 11, Jonava</td>
+                <td>148</td>
+                <td>Pristatymas</td>
+                <td>8</td>
+                <td>Deimantas Sabalaukas</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><strong>Minimalus mokestis už įrangos pristatymą 40 eurų, išvežimą 40 eurų + PVM</strong></p>
+
+    <div class="signatures">
+        <div class="signature-box">
+            <p>Nuomotojo įrangą pristatančio asmens parašas</p>
+            <p>_________________________</p>
+        </div>
+        <div class="signature-box">
+            <p>Nuomininko vardu (Su mechanizmo naudojimo instrukcija susipažinau ir ją gavau):</p>
+            <p>_________________________</p>
+        </div>
+    </div>
+</body>
+</html>
