@@ -7,7 +7,7 @@ from xhtml2pdf import pisa
 import os
 from django.conf import settings
 from .models import Document
-from .forms import DocumentForm, FreightBillForm, PlatformTransferForm
+from .forms import FreightBillForm, PlatformTransferForm
 
 
 # Funkcija dokumento tipo pasirinkimui
@@ -24,7 +24,7 @@ def document_create_freight(request):
         if form.is_valid():
             document = form.save(commit=False)
             document.created_by = request.user
-            document.document_type = 'freight_bill'
+            document.document_type = 'freight'
             document.save()
             return redirect('document_list')
     else:
@@ -40,7 +40,7 @@ def document_create_platform(request):
         if form.is_valid():
             document = form.save(commit=False)
             document.created_by = request.user
-            document.document_type = 'platform_transfer'
+            document.document_type = 'platform'
             document.save()
             return redirect('document_list')
     else:
@@ -62,10 +62,12 @@ def document_list(request):
 @login_required
 def render_pdf_view(request, pk):
     document = get_object_or_404(Document, pk=pk)
-    if document.document_type == 'freight_bill':
+    if document.document_type == 'freight':
         template_path = 'documents/freight_bill_template.html'
-    else:
+    elif document.document_type == 'platform':
         template_path = 'documents/platform_transfer_template.html'
+    else:
+        return HttpResponse('Neteisingas dokumento tipas')
 
     context = {'document': document}
     response = HttpResponse(content_type='application/pdf')
@@ -81,9 +83,13 @@ def render_pdf_view(request, pk):
             raise Exception(f"Static file not found: {s_path}")
         return s_path
 
-    pisa_status = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
-    if pisa_status.err:
-        return HttpResponse('PDF generavimo klaida')
+    try:
+        pisa_status = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
+        if pisa_status.err:
+            return HttpResponse('PDF generavimo klaida')
+    except Exception as e:
+        return HttpResponse(f'Klaida generuojant PDF: {e}')
+
     return response
 
 
@@ -91,14 +97,21 @@ def render_pdf_view(request, pk):
 @login_required
 def document_update(request, pk):
     document = get_object_or_404(Document, pk=pk, created_by=request.user)
+    if document.document_type == 'freight':
+        form_class = FreightBillForm
+    elif document.document_type == 'platform':
+        form_class = PlatformTransferForm
+    else:
+        return HttpResponse('Neteisingas dokumento tipas')
+
     if request.method == 'POST':
-        form = DocumentForm(request.POST, instance=document)
+        form = form_class(request.POST, instance=document)
         if form.is_valid():
             form.save()
             return redirect('document_list')
     else:
-        form = DocumentForm(instance=document)
-    return render(request, 'documents/document_form.html', {'form': form})
+        form = form_class(instance=document)
+    return render(request, 'documents/document_form.html', {'form': form, 'title': 'Redaguoti Dokumentą'})
 
 
 # Dokumento šalinimas

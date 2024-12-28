@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <title>Krovinio Važtaraštis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Krovinio Važtaraštis</h1>
+    <table>
+        <tr>
+            <th>Dokumento numeris:</th>
+            <td>{{ document.document_number }}</td>
+        </tr>
+        <tr>
+            <th>Siuntėjas:</th>
+            <td>{{ document.sender_name }}</td>
+        </tr>
+        <tr>
+            <th>Gavėjas:</th>
+            <td>{{ document.receiver_name }}</td>
+        </tr>
+        <tr>
+            <th>Telefonas:</th>
+            <td>{{ document.phone }}</td>
+        </tr>
+        <tr>
+            <th>Krovinio pavadinimas:</th>
+            <td>{{ document.cargo_name }}</td>
+        </tr>
+        <tr>
+            <th>Kiekis:</th>
+            <td>{{ document.quantity }}</td>
+        </tr>
+        <tr>
+            <th>Adresas:</th>
+            <td>{{ document.project_address }}</td>
+        </tr>
+        <tr>
+            <th>Sukūrimo data:</th>
+            <td>{{ document.created_at }}</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        Sukurta naudojant Dokumentų Valdymo Sistemą
+    </div>
+</body>
+</html>
