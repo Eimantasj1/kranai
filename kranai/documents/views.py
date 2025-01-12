@@ -2,10 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
-from django.template.loader import get_template
-from xhtml2pdf import pisa
-import os
-from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML
 from .models import Document
 from .forms import FreightBillForm, PlatformTransferForm
 
@@ -69,27 +67,16 @@ def render_pdf_view(request, pk):
     else:
         return HttpResponse('Neteisingas dokumento tipas')
 
+    # Ruošiame HTML turinį
     context = {'document': document}
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="document_{document.pk}.pdf"'
+    html_string = render_to_string(template_path, context)
 
-    template = get_template(template_path)
-    html = template.render(context)
+    # Generuojame PDF su WeasyPrint
+    pdf_file = HTML(string=html_string).write_pdf()
 
-    # Tvarkome CSS kelius
-    def link_callback(uri, rel):
-        s_path = os.path.join(settings.STATICFILES_DIRS[0], uri.replace(settings.STATIC_URL, ""))
-        if not os.path.isfile(s_path):
-            raise Exception(f"Static file not found: {s_path}")
-        return s_path
-
-    try:
-        pisa_status = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
-        if pisa_status.err:
-            return HttpResponse('PDF generavimo klaida')
-    except Exception as e:
-        return HttpResponse(f'Klaida generuojant PDF: {e}')
-
+    # Gražiname PDF kaip atsisiuntimą
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="document_{document.pk}.pdf"'
     return response
 
 

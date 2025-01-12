@@ -2,73 +2,168 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8">
-    <title>Krovinio Važtaraštis</title>
+    <title>KROVINIO VAŽTARAŠTIS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            font-size: 12px;
+            font-size: 10pt;
+            margin: 40px;
         }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            max-height: 80px;
+        }
+
+        .header .title {
+            text-align: center;
+            font-size: 16pt;
+            font-weight: bold;
+            flex-grow: 1;
+            margin-right: 50px;
+        }
+
+        .header .date {
+            text-align: right;
+            font-size: 10pt;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
+
         th, td {
             border: 1px solid black;
-            padding: 8px;
+            padding: 5px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
-        }
-        h1 {
+            font-weight: bold;
             text-align: center;
-            margin-bottom: 20px;
         }
+
+        .no-border {
+            border: none;
+        }
+
+        .section-title {
+            font-weight: bold;
+            text-align: left;
+            margin: 15px 0 5px;
+        }
+
+        .signature {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .signature div {
+            width: 45%;
+            text-align: center;
+            border-top: 1px solid black;
+            padding-top: 5px;
+        }
+
         .footer {
             margin-top: 20px;
+            font-size: 8pt;
             text-align: center;
-            font-size: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Krovinio Važtaraštis</h1>
+    <div class="header">
+        <img src="http://127.0.0.1:8000/static/images/cramo_logo.png" alt="Logo">
+        <div class="title">KROVINIO VAŽTARAŠTIS Nr.: {{ document.document_number }}</div>
+        <div class="date">{{ document.created_at|date:"%Y-%m-%d %H:%M" }}<br>(data ir laikas)</div>
+    </div>
+
     <table>
         <tr>
-            <th>Dokumento numeris:</th>
-            <td>{{ document.document_number }}</td>
+            <th colspan="2">UAB „Cramo“, 60360 KĖDAINIAI</th>
         </tr>
         <tr>
-            <th>Siuntėjas:</th>
+            <td class="no-border">J. Basanavičiaus g. 105 57350 Kėdainiai<br>(važtaraščio išrašymo vieta)</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Vežėjas:</th>
+            <td>{{ document.carrier_name }}</td>
+        </tr>
+        <tr>
+            <th>Vairuotojas:</th>
+            <td>{{ document.driver_name }}</td>
+            <th>Valst. Nr.:</th>
+            <td>{{ document.registration_number }}</td>
+        </tr>
+        <tr>
+            <th>Krovinio siuntėjas:</th>
             <td>{{ document.sender_name }}</td>
-        </tr>
-        <tr>
-            <th>Gavėjas:</th>
+            <th>Krovinio gavėjas:</th>
             <td>{{ document.receiver_name }}</td>
         </tr>
         <tr>
-            <th>Telefonas:</th>
-            <td>{{ document.phone }}</td>
+            <th>Pakrovimo vieta:</th>
+            <td>{{ document.loading_location }}</td>
+            <th>Iškrovimo vieta:</th>
+            <td>{{ document.unloading_location }}</td>
         </tr>
         <tr>
-            <th>Krovinio pavadinimas:</th>
-            <td>{{ document.cargo_name }}</td>
-        </tr>
-        <tr>
-            <th>Kiekis:</th>
-            <td>{{ document.quantity }}</td>
-        </tr>
-        <tr>
-            <th>Adresas:</th>
-            <td>{{ document.project_address }}</td>
-        </tr>
-        <tr>
-            <th>Sukūrimo data:</th>
-            <td>{{ document.created_at }}</td>
+            <th>Užsakymo atlikimo data:</th>
+            <td>{{ document.order_date|date:"%Y-%m-%d %H:%M" }}</td>
         </tr>
     </table>
+
+    <div class="section-title">DUOMENYS APIE KROVINĮ:</div>
+    <table>
+        <tr>
+            <th>Eil. Nr.</th>
+            <th>Krovinio pavadinimas</th>
+            <th>Kiekis</th>
+            <th>Mato vnt.</th>
+            <th>Kiti duomenys</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>{{ document.cargo_name }}</td>
+            <td>{{ document.quantity }}</td>
+            <td>{{ document.unit }}</td>
+            <td>{{ document.additional_info }}</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="signature">
+        <div>
+            Krovinį su nepažeista plomba, tara ar pakuote vežti perdavė<br>
+            __________________________<br>
+            (vardas pavardė)
+        </div>
+        <div>
+            Krovinį priėmė<br>
+            __________________________<br>
+            (vardas pavardė)
+        </div>
+    </div>
 
     <div class="footer">
         Sukurta naudojant Dokumentų Valdymo Sistemą

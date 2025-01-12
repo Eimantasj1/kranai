@@ -2,100 +2,140 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8">
-    <title>Mobilios Alkūninės Platformos Aktas</title>
+    <title>MOBILIOS ALKŪNINĖS DARBO PLATFORMOS, PRIĖMIMO - PERDAVIMO AKTAS</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
-            font-size: 12px;
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            margin: 20px;
+            line-height: 1.5;
         }
-        h1 {
-            text-align: center;
-            font-size: 16px;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 20px;
         }
+
+        .logo {
+            margin-top: 10px;
+            width: 320px;
+        }
+
+        .header-info {
+            text-align: right;
+            font-size: 9pt;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
         th, td {
             border: 1px solid black;
             padding: 5px;
             text-align: left;
+            vertical-align: top;
         }
+
         th {
+            background-color: #f7f7f7;
             font-weight: bold;
-            text-align: center;
         }
-        .signature-row {
-            margin-top: 40px;
-            text-align: center;
-        }
-        .footer {
+
+        .signature-section {
             margin-top: 20px;
-            text-align: center;
-            font-size: 10px;
+        }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 9pt;
         }
     </style>
 </head>
 <body>
-    <h1>MOBILIOS ALKŪNINĖS DARBO PLATFORMOS, PRIĖMIMO - PERDAVIMO AKTAS</h1>
+    <div class="header">
+        <img class="logo" src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
+        <div class="header-info">
+            <p>Kėdainių r. sav. Juodkaimių k. Parko g. 20</p>
+            <p>Įm. kodas 302742708 | PVM kodas LT100006728717</p>
+            <p>Tel. (8~675) 94329</p>
+        </div>
+    </div>
+
+    <h1 class="title">MOBILIOS ALKŪNINĖS DARBO PLATFORMOS, PRIĖMIMO - PERDAVIMO AKTAS</h1>
+
     <table>
         <tr>
-            <td>Markė/Modelis</td>
+            <th>Markė/Modelis</th>
             <td>{{ document.model }}</td>
-            <td>Valstybinis Nr.</td>
+            <th>Valstybinis Nr.</th>
             <td>{{ document.registration_number }}</td>
         </tr>
         <tr>
-            <td>Keliamoji galia, strėlės siekis</td>
+            <th>Keliamoji galia, strėlės siekis</th>
             <td>{{ document.lifting_capacity }}</td>
-            <td>Paros kaina</td>
-            <td>{{ document.daily_price }}</td>
+            <th>Paros kaina</th>
+            <td>{{ document.daily_price }} + PVM</td>
         </tr>
         <tr>
-            <td>Kilometro kaina</td>
-            <td>{{ document.km_price }}</td>
-            <td>Užsakovas</td>
+            <th>Kilometro kaina</th>
+            <td>{{ document.km_price }} + PVM</td>
+            <th>Užsakovas</th>
             <td>{{ document.client_name }}</td>
         </tr>
         <tr>
-            <td>Užsakovo kodas</td>
+            <th>Užsakovo kodas</th>
             <td>{{ document.client_code }}</td>
-            <td>Telefonas</td>
+            <th>Telefonas</th>
             <td>{{ document.phone }}</td>
         </tr>
         <tr>
-            <td>Nuomotojo įrangą pristatęs atsakingas asmuo</td>
+            <th>Nuomotojo įrangą pristatęs atsakingas asmuo</th>
             <td>{{ document.delivered_by }}</td>
-            <td>El. Paštas</td>
+            <th>El. Paštas</th>
             <td>{{ document.email }}</td>
         </tr>
     </table>
+
     <table>
         <tr>
             <th>Nuomos pradžios / pabaigos data</th>
             <th>Objekto pavadinimas, adresas, pašto kodas</th>
+            <th>Pravažiuota kilometrų</th>
             <th>Pristatymas / išvežimas</th>
             <th>Dirbta parų</th>
+            <th>Nuomininko atsakingo asmens pareigos, vardas, pavardė, parašas, spaudas</th>
         </tr>
         <tr>
             <td>{{ document.start_date }} / {{ document.end_date }}</td>
             <td>{{ document.project_address }}</td>
             <td>{{ document.distance }}</td>
+            <td>{{ document.delivery_info }}</td>
             <td>{{ document.days_worked }}</td>
+            <td>{{ document.received_by }}</td>
         </tr>
     </table>
-    <div class="signature-row">
-        <p>Nuomotojo įrangą pristatančio asmens parašas _________________________</p>
-        <p>(Pareigos, vardas, pavardė, parašas)</p>
-        <p>Nuomininko atsakingo asmens parašas _________________________</p>
+
+    <div class="signature-section">
+        <p>Nuomotojo įrangą pristačiusio asmens parašas: ______________________</p>
         <p>(Pareigos, vardas, pavardė, parašas)</p>
     </div>
+
     <div class="footer">
-        Minimalus mokestis už įrangos pristatymą: 40 EUR + PVM
+        <p>Minimalus mokestis už įrangos pristatymą 40 eurų, išvežimą 40 eurų, +PVM</p>
+        <p>Nuomininko vardu (Su mechanizmo naudojimo instrukcija susipažinau ir ją gavau): ______________________</p>
     </div>
 </body>
 </html>
