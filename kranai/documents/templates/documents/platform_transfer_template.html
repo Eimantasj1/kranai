@@ -101,6 +101,24 @@
             <th>Telefonas</th>
             <td>{{ document.phone }}</td>
         </tr>
+        <table>
+            <tr>
+                <th>Telefonas</th>
+                <td>{{ document.phone }}</td>
+                <th>El. Paštas</th>
+                <td>{{ document.email }}</td>
+            </tr>
+            <tr>
+                <th>Objekto pavadinimas, adresas, pašto kodas</th>
+                <td>{{ document.project_address }}</td>
+                <th>Pravažiuota kilometrų</th>
+                <td>{{ document.distance }}</td>
+            </tr>
+            <tr>
+                <th>Pristatymas / išvežimas</th>
+                <td colspan="3">{{ document.delivery_info }}</td>
+            </tr>
+        </table>
         <tr>
             <th>Nuomotojo įrangą pristatęs atsakingas asmuo</th>
             <td>{{ document.delivered_by }}</td>

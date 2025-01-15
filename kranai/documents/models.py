@@ -13,7 +13,7 @@ class Document(models.Model):
     document_type = models.CharField(
         max_length=50,
         choices=DOCUMENT_TYPE_CHOICES,
-        default='freight'  # Numatytasis tipas
+        default='freight'
     )
     document_number = models.CharField(max_length=100)
     created_by = models.ForeignKey(
@@ -28,6 +28,7 @@ class Document(models.Model):
     receiver_name = models.CharField("Gavėjo vardas", max_length=255, blank=True, null=True)
     phone = models.CharField("Telefonas", max_length=20, blank=True, null=True)
     project_address = models.CharField("Adresas", max_length=255, blank=True, null=True)
+    email = models.EmailField("El. Paštas", blank=True, null=True)  # Pridėtas naujas laukas
 
     # Platformos akto laukai
     model = models.CharField("Markė/Modelis", max_length=255, blank=True, null=True)
@@ -42,6 +43,10 @@ class Document(models.Model):
     client_code = models.CharField("Užsakovo kodas", max_length=100, blank=True, null=True)
     delivered_by = models.CharField("Nuomotojo įrangą pristatęs asmuo", max_length=255, blank=True, null=True)
     received_by = models.CharField("Nuomininko priėmęs asmuo", max_length=255, blank=True, null=True)
+
+    # Nauji laukai
+    distance = models.CharField("Pravažiuota kilometrų", max_length=100, blank=True, null=True)
+    delivery_info = models.CharField("Pristatymas / išvežimas", max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.get_document_type_display()} - {self.document_number}"

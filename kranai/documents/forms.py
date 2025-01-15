@@ -1,13 +1,13 @@
 from django import forms
 from .models import Document
 
-
 class FreightBillForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = [
             'document_number', 'document_type', 'cargo_name', 'quantity',
-            'sender_name', 'receiver_name', 'phone', 'project_address'
+            'sender_name', 'receiver_name', 'phone', 'email', 'project_address',
+            'distance', 'delivery_info'
         ]
         labels = {
             'document_number': 'Dokumento numeris',
@@ -17,7 +17,10 @@ class FreightBillForm(forms.ModelForm):
             'sender_name': 'Siuntėjo vardas',
             'receiver_name': 'Gavėjo vardas',
             'phone': 'Telefonas',
-            'project_address': 'Projekto adresas',
+            'email': 'El. Paštas',
+            'project_address': 'Adresas',
+            'distance': 'Pravažiuota kilometrų',
+            'delivery_info': 'Pristatymas / išvežimas',
         }
 
 class PlatformTransferForm(forms.ModelForm):
@@ -27,7 +30,8 @@ class PlatformTransferForm(forms.ModelForm):
             'document_number', 'document_type', 'model', 'registration_number',
             'client_name', 'lifting_capacity', 'days_worked', 'daily_price',
             'start_date', 'end_date', 'km_price', 'client_code',
-            'delivered_by', 'received_by',
+            'delivered_by', 'received_by', 'distance', 'delivery_info',
+            'phone', 'email', 'project_address'
         ]
         labels = {
             'document_number': 'Dokumento numeris',
@@ -44,4 +48,9 @@ class PlatformTransferForm(forms.ModelForm):
             'client_code': 'Užsakovo kodas',
             'delivered_by': 'Nuomotojo įrangą pristatęs asmuo',
             'received_by': 'Nuomininko priėmęs asmuo',
+            'distance': 'Pravažiuota kilometrų',
+            'delivery_info': 'Pristatymas / išvežimas',
+            'phone': 'Telefonas',
+            'email': 'El. Paštas',
+            'project_address': 'Adresas',
         }
