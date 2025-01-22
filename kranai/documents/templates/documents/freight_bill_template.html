@@ -12,26 +12,20 @@
 
         .header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            justify-content: flex-start;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .header img {
-            max-height: 80px;
+        .logo {
+            width: 350px;
+            margin: 0 auto 200px;
         }
 
-        .header .title {
-            text-align: center;
-            font-size: 16pt;
+        .title {
+            font-size: 18pt;
             font-weight: bold;
-            flex-grow: 1;
-            margin-right: 50px;
-        }
-
-        .header .date {
-            text-align: right;
-            font-size: 10pt;
+            margin: 0;
         }
 
         table {
@@ -42,7 +36,7 @@
 
         th, td {
             border: 1px solid black;
-            padding: 5px;
+            padding: 8px;
             text-align: left;
         }
 
@@ -84,9 +78,11 @@
 </head>
 <body>
     <div class="header">
-        <img src="http://127.0.0.1:8000/static/images/cramo_logo.png" alt="Logo">
-        <div class="title">KROVINIO VAŽTARAŠTIS Nr.: {{ document.document_number }}</div>
-        <div class="date">{{ document.created_at|date:"%Y-%m-%d %H:%M" }}<br>(data ir laikas)</div>
+        <img class="logo" src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
+        <div>
+            <div class="title">KROVINIO VAŽTARAŠTIS</div>
+            <div>Nr.: {{ document.document_number }}</div>
+        </div>
     </div>
 
     <table>

@@ -1,40 +1,43 @@
 {% load static %}
-<html lang="en">
+<html lang="lt">
 <head>
     <meta charset="UTF-8">
     <title>Dokumentų Valdymo Sistema</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 </head>
+<script src="{% static 'scripts.js' %}"></script>
 <body class="light-mode">
-    <header>
-        <h1>Dokumentų Valdymo Sistema</h1>
-        <div class="header-controls">
+    <header class="d-flex align-items-center justify-content-between px-4 py-3 shadow-sm" style="background-color: var(--primary-color); color: white;">
+        <div class="d-flex align-items-center">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="me-3" style="width: 80px; height: auto;">
+            <h1 class="m-0 fw-bold fs-3 text-center" style="flex-grow: 1;">Dokumentų Valdymo Sistema</h1>
+        </div>
+        <div>
             {% if user.is_authenticated %}
-                <span class="user-info">Sveiki, {{ user.username }}</span>
-                <a href="{% url 'logout' %}" class="logout-btn">Atsijungti</a>
+                <span class="user-info me-3">Sveiki, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Atsijungti</a>
             {% endif %}
-            <span class="toggle-theme" onclick="toggleTheme()">🌙</span>
         </div>
     </header>
+
     {% if user.is_authenticated %}
-    <nav>
-        <ul>
-            <li><a href="{% url 'document_list' %}">Dokumentų Sąrašas</a></li>
-            <li><a href="{% url 'document_select' %}">Naujas Dokumentas</a></li> <!-- Dokumento tipo pasirinkimo puslapis -->
-        </ul>
+    <nav class="py-2 shadow-sm" style="background-color: #f9f9f9;">
+        <div class="container d-flex justify-content-center gap-4">
+            <a href="{% url 'document_list' %}" class="nav-link">Dokumentų Sąrašas</a>
+            <a href="{% url 'document_select' %}" class="nav-link">Naujas Dokumentas</a>
+        </div>
     </nav>
     {% endif %}
-    <main>
+
+    <main class="container my-4">
         {% block content %}{% endblock %}
     </main>
-    <footer>
-        © 2024 Dokumentų Valdymo Sistema
+
+    <footer class="text-center py-3 mt-auto" style="background-color: var(--primary-color); color: white;">
+        © 2025 Dokumentų Valdymo Sistema
     </footer>
-    <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            document.body.classList.toggle('light-mode');
-        }
-    </script>
+
+    <script src="{% static 'scripts.js' %}"></script>
 </body>
 </html>

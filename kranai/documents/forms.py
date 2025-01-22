@@ -5,13 +5,12 @@ class FreightBillForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = [
-            'document_number', 'document_type', 'cargo_name', 'quantity',
+            'document_number', 'cargo_name', 'quantity',
             'sender_name', 'receiver_name', 'phone', 'email', 'project_address',
             'distance', 'delivery_info'
         ]
         labels = {
             'document_number': 'Dokumento numeris',
-            'document_type': 'Dokumento tipas',
             'cargo_name': 'Krovinio pavadinimas',
             'quantity': 'Kiekis',
             'sender_name': 'Siuntėjo vardas',
@@ -27,7 +26,7 @@ class PlatformTransferForm(forms.ModelForm):
     class Meta:
         model = Document
         fields = [
-            'document_number', 'document_type', 'model', 'registration_number',
+            'document_number', 'model', 'registration_number',
             'client_name', 'lifting_capacity', 'days_worked', 'daily_price',
             'start_date', 'end_date', 'km_price', 'client_code',
             'delivered_by', 'received_by', 'distance', 'delivery_info',
@@ -35,7 +34,6 @@ class PlatformTransferForm(forms.ModelForm):
         ]
         labels = {
             'document_number': 'Dokumento numeris',
-            'document_type': 'Dokumento tipas',
             'model': 'Markė/Modelis',
             'registration_number': 'Valstybinis numeris',
             'client_name': 'Užsakovas',
