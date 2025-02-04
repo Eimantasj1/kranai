@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Document(models.Model):
     # Dokumento tipų pasirinkimai
     DOCUMENT_TYPE_CHOICES = [
@@ -16,10 +15,14 @@ class Document(models.Model):
         default='freight'
     )
     document_number = models.CharField(max_length=100)
-    created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="documents"
-    )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="documents")
     created_at = models.DateTimeField(auto_now_add=True)
+
+    # **📌 Pridėti trūkstami krovinio važtaraščio laukai**
+    carrier_name = models.CharField("Vežėjas", max_length=255, blank=True, null=True)
+    driver_name = models.CharField("Vairuotojo vardas", max_length=255, blank=True, null=True)
+    loading_location = models.CharField("Pakrovimo vieta", max_length=255, blank=True, null=True)
+    unloading_location = models.CharField("Iškrovimo vieta", max_length=255, blank=True, null=True)
 
     # Krovinio važtaraščio laukai
     cargo_name = models.CharField("Krovinio pavadinimas", max_length=255, blank=True, null=True)
@@ -28,7 +31,7 @@ class Document(models.Model):
     receiver_name = models.CharField("Gavėjo vardas", max_length=255, blank=True, null=True)
     phone = models.CharField("Telefonas", max_length=20, blank=True, null=True)
     project_address = models.CharField("Adresas", max_length=255, blank=True, null=True)
-    email = models.EmailField("El. Paštas", blank=True, null=True)  # Pridėtas naujas laukas
+    email = models.EmailField("El. Paštas", blank=True, null=True)
 
     # Platformos akto laukai
     model = models.CharField("Markė/Modelis", max_length=255, blank=True, null=True)

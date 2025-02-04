@@ -3,11 +3,11 @@
 {% block title %}Pasirinkite Dokumento Tipą{% endblock %}
 
 {% block content %}
-<div class="document-select-container">
-    <h2 class="document-select-title">Pasirinkite Dokumento Tipą</h2>
-    <div class="document-select-buttons">
-        <a href="{% url 'document_create_freight' %}" class="document-btn">Krovinio Važtaraštis</a>
-        <a href="{% url 'document_create_platform' %}" class="document-btn">Mobilios Alkūninės Platformos Aktas</a>
+<div class="text-center my-5">
+    <h2 class="fw-bold mb-5" style="color: var(--primary-color);">Pasirinkite Dokumento Tipą</h2>
+    <div class="d-flex justify-content-center gap-4">
+        <a href="{% url 'document_create_freight' %}" class="btn btn-outline-success btn-lg shadow-sm">Krovinio Važtaraštis</a>
+        <a href="{% url 'document_create_platform' %}" class="btn btn-outline-success btn-lg shadow-sm">Mobilios Alkūninės Platformos Aktas</a>
     </div>
 </div>
 {% endblock %}

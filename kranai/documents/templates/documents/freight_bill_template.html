@@ -11,156 +11,158 @@
         }
 
         .header {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        .logo {
-            width: 350px;
-            margin: 0 auto 200px;
+        .header img {
+            width: 150px;
         }
 
-        .title {
+        .header .title {
             font-size: 18pt;
             font-weight: bold;
-            margin: 0;
+            margin: 10px 0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .header .number-and-date {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10pt;
+            margin-top: 10px;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
+        .field-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .field-label {
+            width: 30%;
+            font-weight: bold;
             text-align: left;
         }
 
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+        .field-value {
+            width: 65%;
+            border-bottom: 1px solid black;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            border: 1px solid black;
+            padding: 6px;
             text-align: center;
         }
 
-        .no-border {
-            border: none;
-        }
-
-        .section-title {
+        .table th {
+            background-color: #f2f2f2;
             font-weight: bold;
-            text-align: left;
-            margin: 15px 0 5px;
         }
 
-        .signature {
+        .signatures {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
         }
 
-        .signature div {
+        .signature {
             width: 45%;
             text-align: center;
             border-top: 1px solid black;
-            padding-top: 5px;
+            padding-top: 10px;
         }
 
         .footer {
-            margin-top: 20px;
-            font-size: 8pt;
             text-align: center;
+            margin-top: 30px;
+            font-size: 8pt;
         }
     </style>
 </head>
 <body>
+    <!-- Header Section -->
     <div class="header">
-        <img class="logo" src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
-        <div>
-            <div class="title">KROVINIO VAŽTARAŠTIS</div>
-            <div>Nr.: {{ document.document_number }}</div>
+        <img src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
+        <div class="title">KROVINIO VAŽTARAŠTIS</div>
+        <div class="number-and-date">
+            <span>Nr.: {{ document.document_number }}</span>
+            <span>{{ document.order_date|date:"%Y-%m-%d %H:%M" }} (data ir laikas)</span>
         </div>
     </div>
 
-    <table>
-        <tr>
-            <th colspan="2">UAB „Cramo“, 60360 KĖDAINIAI</th>
-        </tr>
-        <tr>
-            <td class="no-border">J. Basanavičiaus g. 105 57350 Kėdainiai<br>(važtaraščio išrašymo vieta)</td>
-        </tr>
-    </table>
+    <!-- Sender/Receiver Info Section -->
+    <div>
+        <div class="field-group">
+            <div class="field-label">Vežėjas:</div>
+            <div class="field-value">{{ document.carrier_name }}</div>
+        </div>
+        <div class="field-group">
+            <div class="field-label">Vairuotojas:</div>
+            <div class="field-value">{{ document.driver_name }}</div>
+        </div>
+        <div class="field-group">
+            <div class="field-label">Valst. Nr.:</div>
+            <div class="field-value">{{ document.registration_number }}</div>
+        </div>
+        <div class="field-group">
+            <div class="field-label">Krovinio siuntėjas:</div>
+            <div class="field-value">{{ document.sender_name }}</div>
+        </div>
+        <div class="field-group">
+            <div class="field-label">Krovinio gavėjas:</div>
+            <div class="field-value">{{ document.receiver_name }}</div>
+        </div>
+        <div class="field-group">
+            <div class="field-label">Pakrovimo vieta:</div>
+            <div class="field-value">{{ document.loading_location }}</div>
+        </div>
+        <div class="field-group">
+            <div class="field-label">Iškrovimo vieta:</div>
+            <div class="field-value">{{ document.unloading_location }}</div>
+        </div>
+    </div>
 
-    <table>
-        <tr>
-            <th>Vežėjas:</th>
-            <td>{{ document.carrier_name }}</td>
-        </tr>
-        <tr>
-            <th>Vairuotojas:</th>
-            <td>{{ document.driver_name }}</td>
-            <th>Valst. Nr.:</th>
-            <td>{{ document.registration_number }}</td>
-        </tr>
-        <tr>
-            <th>Krovinio siuntėjas:</th>
-            <td>{{ document.sender_name }}</td>
-            <th>Krovinio gavėjas:</th>
-            <td>{{ document.receiver_name }}</td>
-        </tr>
-        <tr>
-            <th>Pakrovimo vieta:</th>
-            <td>{{ document.loading_location }}</td>
-            <th>Iškrovimo vieta:</th>
-            <td>{{ document.unloading_location }}</td>
-        </tr>
-        <tr>
-            <th>Užsakymo atlikimo data:</th>
-            <td>{{ document.order_date|date:"%Y-%m-%d %H:%M" }}</td>
-        </tr>
-    </table>
+    <!-- Freight Data Section -->
+    <div>
+        <div class="section-title">DUOMENYS APIE KROVINĮ:</div>
+        <table class="table">
+            <tr>
+                <th>Eil. Nr.</th>
+                <th>Krovinio pavadinimas</th>
+                <th>Kiekis</th>
+                <th>Mato vnt.</th>
+                <th>Kiti duomenys</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>{{ document.cargo_name }}</td>
+                <td>{{ document.quantity }}</td>
+                <td>{{ document.unit }}</td>
+                <td>{{ document.additional_info }}</td>
+            </tr>
+        </table>
+    </div>
 
-    <div class="section-title">DUOMENYS APIE KROVINĮ:</div>
-    <table>
-        <tr>
-            <th>Eil. Nr.</th>
-            <th>Krovinio pavadinimas</th>
-            <th>Kiekis</th>
-            <th>Mato vnt.</th>
-            <th>Kiti duomenys</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>{{ document.cargo_name }}</td>
-            <td>{{ document.quantity }}</td>
-            <td>{{ document.unit }}</td>
-            <td>{{ document.additional_info }}</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-
-    <div class="signature">
-        <div>
+    <!-- Signatures Section -->
+    <div class="signatures">
+        <div class="signature">
             Krovinį su nepažeista plomba, tara ar pakuote vežti perdavė<br>
-            __________________________<br>
-            (vardas pavardė)
+            __________________________<br>(vardas pavardė)
         </div>
-        <div>
+        <div class="signature">
             Krovinį priėmė<br>
-            __________________________<br>
-            (vardas pavardė)
+            __________________________<br>(vardas pavardė)
         </div>
     </div>
 
+    <!-- Footer Section -->
     <div class="footer">
         Sukurta naudojant Dokumentų Valdymo Sistemą
     </div>
