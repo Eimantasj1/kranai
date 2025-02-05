@@ -4,6 +4,7 @@
 
 {% block content %}
 <h2 class="text-center mb-4">Dokumentų sąrašas</h2>
+
 <table>
     <thead>
         <tr>
@@ -15,15 +16,17 @@
     </thead>
     <tbody>
         {% for document in documents %}
-        <tr class="document-row" data-url="{% url 'document_pdf' document.pk %}">
+        <tr class="clickable-row" data-url="{% url 'document_view' document.pk %}">
             <td>{{ document.document_number }}</td>
-            <td>{{ document.cargo_name }}</td>
-            <td>{{ document.quantity }}</td>
+            <td>{{ document.cargo_name|default:"-" }}</td>
+            <td>{{ document.quantity|default:"-" }}</td>
             <td class="actions">
-                <a href="{% url 'document_pdf' document.pk %}" class="print">Spausdinti / Atsisiųsti PDF</a>
-                <a href="{% url 'document_update' document.pk %}" class="edit">Redaguoti</a>
+                <a href="{% url 'document_pdf' document.pk %}" class="print" download="document_{{ document.pk }}.pdf" onclick="event.stopPropagation();">
+                    Atsisiųsti PDF
+                </a>
+                <a href="{% url 'document_update' document.pk %}" class="edit" onclick="event.stopPropagation();">Redaguoti</a>
                 {% if request.user.is_staff %}
-                    <a href="{% url 'document_delete' document.pk %}" class="delete">Ištrinti</a>
+                    <a href="{% url 'document_delete' document.pk %}" class="delete" onclick="event.stopPropagation();">Ištrinti</a>
                 {% endif %}
             </td>
         </tr>
@@ -34,4 +37,18 @@
         {% endfor %}
     </tbody>
 </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".clickable-row").forEach(row => {
+            row.addEventListener("click", function (event) {
+                // Jei paspaudžiama ne ant nuorodos, atidaryti peržiūrai
+                if (!event.target.closest("a")) {
+                    window.open(this.dataset.url, '_blank');
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock %}

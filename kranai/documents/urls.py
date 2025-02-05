@@ -8,5 +8,6 @@ urlpatterns = [
     path('new/platform/', views.document_create_platform, name='document_create_platform'),  # Naujo Platformos akto kūrimas
     path('<int:pk>/edit/', views.document_update, name='document_update'),  # Dokumento redagavimas
     path('<int:pk>/delete/', views.document_delete, name='document_delete'),  # Dokumento ištrynimas
-    path('<int:pk>/pdf/', views.render_pdf_view, name='document_pdf'),  # Dokumento PDF generavimas
+    path('<int:pk>/pdf/', views.render_pdf_view, name='document_pdf'),  # Dokumento PDF atsisiuntimas
+    path('<int:pk>/view/', views.render_pdf_view, {'preview': True}, name='document_view'),  # Dokumento peržiūra
 ]
