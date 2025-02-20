@@ -17,10 +17,52 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Header išdėstymas */
 header {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
 }
 
+header .logo {
+    width: 270px;
+    height: auto;
+}
+
+.header-title {
+    flex-grow: 1; 
+    text-align: center;
+    font-size: 22px;
+    margin-left: -80px;
+}
+
+.text-center {
+    flex-grow: 2;
+    text-align: center;
+    font-size: 22px; 
+}
+
+/* Pasisveikinimo ir atsijungimo mygtuko sekcija */
+.user-controls {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#logout-form {
+    margin-top: 6px;
+}
+
+/* Navigacija */
 .nav-link {
     padding: 10px 15px;
     text-decoration: none;
@@ -66,6 +108,7 @@ tbody tr:hover {
     cursor: pointer;
 }
 
+/* Veiksmų mygtukai */
 .actions a {
     display: inline-block;
     padding: 5px 10px;
@@ -88,6 +131,7 @@ tbody tr:hover {
     background-color: #f44336;
 }
 
+/* Footer */
 footer {
     background-color: var(--primary-color);
     color: white;
@@ -95,7 +139,46 @@ footer {
     padding: 10px 20px;
     position: fixed;
     bottom: 0; 
-    left: 0; /* Nustatykite kairėje */
+    left: 0;
     width: 100%;
-    z-index: 1000; /* Užtikrinkite, kad poraštė būtų virš kitų elementų */
+    z-index: 1000;
+}
+
+/* Dokumentų pasirinkimai */
+.document-selection {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.document-card {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    text-decoration: none;
+    color: #333;
+    width: 250px;
+    transition: 0.3s ease-in-out;
+}
+
+.document-card:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.document-card img {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: contain;
+}
+
+.document-card p {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
 }

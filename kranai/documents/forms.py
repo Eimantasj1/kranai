@@ -37,7 +37,7 @@ class PlatformTransferForm(forms.ModelForm):
             'client_name', 'lifting_capacity', 'days_worked', 'daily_price',
             'start_date', 'end_date', 'km_price', 'client_code', 
             'delivered_by', 'received_by', 'distance', 'delivery_info',
-            'phone', 'email', 'project_address'
+            'phone', 'email', 'project_address', 'transport_price_delivery', 'transport_price_pickup'
         ]
         labels = {
             'document_number': 'Dokumento numeris',
@@ -58,4 +58,6 @@ class PlatformTransferForm(forms.ModelForm):
             'phone': 'Telefonas',
             'email': 'El. Paštas',
             'project_address': 'Adresas',
+            'transport_price_delivery': 'Pristatymo mokestis (€)',
+            'transport_price_pickup': 'Išvežimo mokestis (€)',
         }

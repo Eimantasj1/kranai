@@ -51,5 +51,12 @@ class Document(models.Model):
     distance = models.CharField("Pravažiuota kilometrų", max_length=100, blank=True, null=True)
     delivery_info = models.CharField("Pristatymas / išvežimas", max_length=255, blank=True, null=True)
 
+    transport_price_delivery = models.DecimalField(
+        "Pristatymo mokestis (€)", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    transport_price_pickup = models.DecimalField(
+        "Išvežimo mokestis (€)", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+
     def __str__(self):
         return f"{self.get_document_type_display()} - {self.document_number}"

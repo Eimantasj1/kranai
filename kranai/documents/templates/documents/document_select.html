@@ -1,13 +1,28 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Pasirinkite Dokumento Tipą{% endblock %}
 
 {% block content %}
-<div class="text-center my-5">
-    <h2 class="fw-bold mb-5" style="color: var(--primary-color);">Pasirinkite Dokumento Tipą</h2>
-    <div class="d-flex justify-content-center gap-4">
-        <a href="{% url 'document_create_freight' %}" class="btn btn-outline-success btn-lg shadow-sm">Krovinio Važtaraštis</a>
-        <a href="{% url 'document_create_platform' %}" class="btn btn-outline-success btn-lg shadow-sm">Mobilios Alkūninės Platformos Aktas</a>
-    </div>
+<h2 class="text-center mb-4">Pasirinkite Dokumento Tipą</h2>
+
+<div class="document-selection">
+    <!-- Krovinio važtaraštis -->
+    <a href="{% url 'document_create_freight' %}" class="document-card">
+        <img src="{% static 'images/freight.png' %}" alt="Krovinio važtaraštis">
+        <p>Krovinio važtaraštis</p>
+    </a>
+
+    <!-- Mobilios alkūninės platformos aktas -->
+    <a href="{% url 'document_create_platform' %}" class="document-card">
+        <img src="{% static 'images/platform.png' %}" alt="Mobilios alkūninės darbo platformos aktas">
+        <p>Mobilios alkūninės darbo platformos aktas</p>
+    </a>
+
+    <!-- Papildomi dokumentai -->
+    <a href="#" class="document-card">
+        <img src="{% static 'images/other_document.png' %}" alt="Kitas dokumentas">
+        <p>Kitas dokumentas</p>
+    </a>
 </div>
 {% endblock %}
