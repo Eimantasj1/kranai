@@ -39,11 +39,12 @@ def document_create_platform(request):
             document = form.save(commit=False)
             document.created_by = request.user
             document.document_type = 'platform'
+            document.delivered_by = f"{request.user.first_name} {request.user.last_name}"  # Automatinis priskyrimas
             document.save()
             return redirect('document_list')
     else:
         form = PlatformTransferForm()
-
+    
     return render(request, 'documents/document_form.html', {'form': form, 'title': 'Platformos Priėmimo-Perdavimo Aktas'})
 
 

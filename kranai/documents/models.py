@@ -44,8 +44,8 @@ class Document(models.Model):
     end_date = models.DateField("Nuomos pabaigos data", blank=True, null=True)
     km_price = models.DecimalField("Kilometro kaina", max_digits=10, decimal_places=2, blank=True, null=True)
     client_code = models.CharField("Užsakovo kodas", max_length=100, blank=True, null=True)
-    delivered_by = models.CharField("Nuomotojo įrangą pristatęs asmuo", max_length=255, blank=True, null=True)
-    received_by = models.CharField("Nuomininko priėmęs asmuo", max_length=255, blank=True, null=True)
+    delivered_by = models.CharField("Įrangą pristatęs asmuo", max_length=255, blank=True, null=True)
+    received_by = models.CharField("Įrangą priėmęs asmuo", max_length=255, blank=True, null=True)
 
     # Nauji laukai
     distance = models.CharField("Pravažiuota kilometrų", max_length=100, blank=True, null=True)

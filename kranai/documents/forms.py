@@ -36,7 +36,7 @@ class PlatformTransferForm(forms.ModelForm):
             'document_number', 'model', 'registration_number', 
             'client_name', 'lifting_capacity', 'days_worked', 'daily_price',
             'start_date', 'end_date', 'km_price', 'client_code', 
-            'delivered_by', 'received_by', 'distance', 'delivery_info',
+            'received_by', 'distance', 'delivery_info',
             'phone', 'email', 'project_address', 'transport_price_delivery', 'transport_price_pickup'
         ]
         labels = {
@@ -51,8 +51,7 @@ class PlatformTransferForm(forms.ModelForm):
             'end_date': 'Nuomos pabaigos data',
             'km_price': 'Kilometro kaina',
             'client_code': 'Užsakovo kodas',
-            'delivered_by': 'Nuomotojo įrangą pristatęs asmuo',
-            'received_by': 'Nuomininko priėmęs asmuo',
+            'received_by': 'Įrangą priėmęs asmuo',
             'distance': 'Pravažiuota kilometrų',
             'delivery_info': 'Pristatymas / išvežimas',
             'phone': 'Telefonas',
