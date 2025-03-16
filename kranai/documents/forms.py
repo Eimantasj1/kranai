@@ -1,35 +1,51 @@
 from django import forms
-from .models import Document
+from .models import Document, Vehicle
 
 class FreightBillForm(forms.ModelForm):
+    registration_number = forms.ModelChoiceField(
+        queryset=Vehicle.objects.all(),
+        empty_label="Pasirinkite valstybinį numerį",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label="Valst. Nr."
+    )
+
     class Meta:
         model = Document
         fields = [
             'document_number', 'cargo_name', 'quantity', 
-            'sender_name', 'receiver_name', 'phone', 
+            'receiver_name', 'phone', 
             'email', 'project_address', 'distance', 'delivery_info', 
-            'driver_name', 'carrier_name', 'registration_number',
+            'registration_number',
             'loading_location', 'unloading_location'
         ]
         labels = {
             'document_number': 'Dokumento numeris',
             'cargo_name': 'Krovinio pavadinimas',
             'quantity': 'Kiekis',
-            'sender_name': 'Siuntėjo vardas',
             'receiver_name': 'Gavėjo vardas',
             'phone': 'Telefonas',
             'email': 'El. Paštas',
             'project_address': 'Adresas',
             'distance': 'Pravažiuota kilometrų',
             'delivery_info': 'Pristatymas / išvežimas',
-            'driver_name': 'Vairuotojas',
-            'carrier_name': 'Vežėjas',
             'registration_number': 'Valst. Nr.',
             'loading_location': 'Pakrovimo vieta',
             'unloading_location': 'Iškrovimo vieta',
         }
 
 class PlatformTransferForm(forms.ModelForm):
+    registration_number = forms.ModelChoiceField(
+        queryset=Vehicle.objects.all(),
+        empty_label="Pasirinkite valstybinį numerį",
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'vehicle-select'}),
+        label="Valstybinis numeris"
+    )
+
+    model = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control', 'id': 'vehicle-model'}),
+        required=False
+    )
+
     class Meta:
         model = Document
         fields = [
@@ -60,3 +76,14 @@ class PlatformTransferForm(forms.ModelForm):
             'transport_price_delivery': 'Pristatymo mokestis (€)',
             'transport_price_pickup': 'Išvežimo mokestis (€)',
         }
+
+    def __init__(self, *args, **kwargs):
+        """ Automatiškai užpildo 'delivered_by' pagal vartotojo vardą """
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['delivered_by'] = forms.CharField(
+                initial=user.get_full_name(),
+                widget=forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control'}),
+                required=False
+            )

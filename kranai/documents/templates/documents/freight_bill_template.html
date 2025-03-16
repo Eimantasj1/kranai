@@ -2,62 +2,91 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8">
-    <title>KROVINIO VAŽTARAŠTIS</title>
+    <title>MOBILIOS ALKŪNINĖS DARBO PLATFORMOS PRIĖMIMO-PERDAVIMO AKTAS</title>
     <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
         body {
             font-family: Arial, sans-serif;
             font-size: 10pt;
-            margin: 40px;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5; /* Didesni tarpai tarp eilučių */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 180mm;
+            margin: 0 auto;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header img {
-            width: 150px;
-        }
-
-        .header .title {
-            font-size: 18pt;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .header .number-and-date {
             display: flex;
             justify-content: space-between;
-            font-size: 10pt;
-            margin-top: 10px;
+            align-items: flex-start;
+            margin-bottom: 0; /* Pašalintas tarpas, valdysime per .content */
+        }
+
+        .logo {
+            width: 200px; /* Didesnis logotipas */
+            height: auto;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 9pt;
+        }
+
+        .content {
+            margin-top: 20mm; /* Perslenkama žemyn, kad tilptų geltonos ir mėlynos sritys */
+        }
+
+        .header-center {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .header-center .title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .header-center .number {
+            font-size: 9pt;
+            margin-top: 4mm; /* Didesnis tarpas */
         }
 
         .field-group {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 4mm; /* Didesnis tarpas */
+            font-size: 9pt;
         }
 
-        .field-label {
-            width: 30%;
+        .field-group p {
+            margin: 3mm 0; /* Didesni tarpai tarp eilučių */
+            border-bottom: 1px solid #000;
+            padding-bottom: 1px;
+        }
+
+        .section-title {
             font-weight: bold;
-            text-align: left;
-        }
-
-        .field-value {
-            width: 65%;
-            border-bottom: 1px solid black;
+            margin: 5mm 0 4mm; /* Didesnis tarpas */
+            font-size: 10pt;
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 4mm; /* Didesnis tarpas */
+            font-size: 9pt;
         }
 
         .table th, .table td {
-            border: 1px solid black;
-            padding: 6px;
+            border: 1px solid #000;
+            padding: 4px 4px; /* Didesnis tarpas */
             text-align: center;
         }
 
@@ -67,104 +96,102 @@
         }
 
         .signatures {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 5mm;
+            font-size: 9pt;
         }
 
         .signature {
-            width: 45%;
+            margin-bottom: 5mm;
             text-align: center;
-            border-top: 1px solid black;
-            padding-top: 10px;
+            border-top: 1px solid #000;
+            padding-top: 20mm; /* Didesnis tarpas tarp teksto ir parašo (pagal raudonus pabraukimus) */
         }
 
         .footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 5mm;
             font-size: 8pt;
         }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <div class="header">
-        <img src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
-        <div class="title">KROVINIO VAŽTARAŠTIS</div>
-        <div class="number-and-date">
-            <span>Nr.: {{ document.document_number }}</span>
-            <span>{{ document.order_date|date:"%Y-%m-%d %H:%M" }} (data ir laikas)</span>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <img class="logo" src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
+            <div class="header-right">
+                {{ document.created_at|date:"Y-m-d H:i" }} (data ir laikas)
+            </div>
         </div>
-    </div>
 
-    <!-- Sender/Receiver Info Section -->
-    <div>
-        <div class="field-group">
-            <div class="field-label">Vežėjas:</div>
-            <div class="field-value">{{ document.carrier_name }}</div>
-        </div>
-        <div class="field-group">
-            <div class="field-label">Vairuotojas:</div>
-            <div class="field-value">{{ document.driver_name }}</div>
-        </div>
-        <div class="field-group">
-            <div class="field-label">Valst. Nr.:</div>
-            <div class="field-value">{{ document.registration_number }}</div>
-        </div>
-        <div class="field-group">
-            <div class="field-label">Krovinio siuntėjas:</div>
-            <div class="field-value">{{ document.sender_name }}</div>
-        </div>
-        <div class="field-group">
-            <div class="field-label">Krovinio gavėjas:</div>
-            <div class="field-value">{{ document.receiver_name }}</div>
-        </div>
-        <div class="field-group">
-            <div class="field-label">Pakrovimo vieta:</div>
-            <div class="field-value">{{ document.loading_location }}</div>
-        </div>
-        <div class="field-group">
-            <div class="field-label">Iškrovimo vieta:</div>
-            <div class="field-value">{{ document.unloading_location }}</div>
-        </div>
-    </div>
+        <!-- Content Section (perslenkta žemyn) -->
+        <div class="content">
+            <div class="header-center">
+                <div class="title">MOBILIOS ALKŪNINĖS DARBO PLATFORMOS PRIĖMIMO-PERDAVIMO AKTAS</div>
+                <div class="number">Nr.: {{ document.document_number }}</div>
+            </div>
 
-    <!-- Freight Data Section -->
-    <div>
-        <div class="section-title">DUOMENYS APIE KROVINĮ:</div>
-        <table class="table">
-            <tr>
-                <th>Eil. Nr.</th>
-                <th>Krovinio pavadinimas</th>
-                <th>Kiekis</th>
-                <th>Mato vnt.</th>
-                <th>Kiti duomenys</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>{{ document.cargo_name }}</td>
-                <td>{{ document.quantity }}</td>
-                <td>{{ document.unit }}</td>
-                <td>{{ document.additional_info }}</td>
-            </tr>
-        </table>
-    </div>
+            <!-- Client Info Section -->
+            <div class="field-group">
+                <p><strong>Užsakovas:</strong> {{ document.client_name|default:"-" }} (Kodas: {{ document.client_code|default:"-" }})</p>
+                <p><strong>Telefonas:</strong> {{ document.phone|default:"-" }}</p>
+                <p><strong>El. Paštas:</strong> {{ document.email|default:"-" }}</p>
+                <p><strong>Objekto pavadinimas, adresas:</strong> {{ document.project_address|default:"-" }}</p>
+                <p><strong>Pravažiuota kilometrų:</strong> {{ document.distance|default:"-" }}</p>
+                <p><strong>Pristatymas / išvežimas:</strong> {{ document.delivery_info|default:"-" }}</p>
+                <p><strong>Įrangą pristatęs asmuo:</strong> {{ document.delivered_by|default:"-" }}</p>
+                <p><strong>Įrangą priėmęs asmuo:</strong> {{ document.received_by|default:"-" }}</p>
+            </div>
 
-    <!-- Signatures Section -->
-    <div class="signatures">
-        <div class="signature">
-            Krovinį su nepažeista plomba, tara ar pakuote vežti perdavė<br>
-            __________________________<br>(vardas pavardė)
-        </div>
-        <div class="signature">
-            Krovinį priėmė<br>
-            __________________________<br>(vardas pavardė)
-        </div>
-    </div>
+            <!-- Technical Data Section -->
+            <div>
+                <div class="section-title">DUOMENYS APIE ĮRANGĄ:</div>
+                <table class="table">
+                    <tr>
+                        <th>Eil. Nr.</th>
+                        <th>Markė / Modelis</th>
+                        <th>Valstybinis Nr.</th>
+                        <th>Keliamoji galia</th>
+                        <th>Paros kaina</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>{{ document.model|default:"-" }}</td>
+                        <td>{{ document.registration_number|default:"-" }}</td>
+                        <td>{{ document.lifting_capacity|default:"-" }}</td>
+                        <td>{{ document.daily_price|default:"0.00" }} € + PVM</td>
+                    </tr>
+                </table>
+            </div>
 
-    <!-- Footer Section -->
-    <div class="footer">
-        Sukurta naudojant Dokumentų Valdymo Sistemą
+            <!-- Additional Technical Data -->
+            <div class="field-group">
+                <p><strong>Kilometro kaina:</strong> {{ document.km_price|default:"0.00" }} € + PVM</p>
+                <p><strong>Dirbta parų:</strong> {{ document.days_worked|default:"0" }}</p>
+                <p><strong>Nuomos pradžios / pabaigos data:</strong> {{ document.start_date|date:"Y-m-d" }} / {{ document.end_date|date:"Y-m-d"|default:"-" }}</p>
+                <p><strong>Pristatymo mokestis:</strong> {{ document.transport_price_delivery|default:"0.00" }} €</p>
+                <p><strong>Išvežimo mokestis:</strong> {{ document.transport_price_pickup|default:"0.00" }} €</p>
+            </div>
+
+            <!-- Signatures Section -->
+            <div class="signatures">
+                <div class="signature">
+                    Nuomotojo įrangą pristačiusio asmens parašas:<br>
+                    <br><br><br><br><br><br> <!-- Didesnis tarpas pagal raudoną pabraukimą -->
+                    __________________________<br>(vardas pavardė)
+                </div>
+                <div class="signature">
+                    Nuomininko vardu (Su mechanizmo naudojimo instrukcija susipažinau ir ją gavau):<br>
+                    <br><br><br><br><br><br> <!-- Didesnis tarpas pagal raudoną pabraukimą -->
+                    __________________________<br>(vardas pavardė)
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="footer">
+                Sukurta naudojant Dokumentų Valdymo Sistemą
+            </div>
+        </div>
     </div>
 </body>
 </html>

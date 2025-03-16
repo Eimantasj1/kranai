@@ -2,143 +2,188 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8">
-    <title>MOBILIOS ALKŪNINĖS DARBO PLATFORMOS, PRIĖMIMO - PERDAVIMO AKTAS</title>
+    <title>MOBILIOS ALKŪNINĖS DARBO PLATFORMOS PRIĖMIMO-PERDAVIMO AKTAS</title>
     <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
         body {
             font-family: Arial, sans-serif;
             font-size: 10pt;
-            margin: 20px;
-            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            line-height: 1.3;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 180mm;
+            margin: 0 auto;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .logo {
-            margin-top: 10px;
-            width: 320px;
+            width: 250px;
+            height: auto;
         }
 
-        .header-info {
+        .header-right {
             text-align: right;
             font-size: 9pt;
         }
 
-        .title {
+        .content {
+            margin-top: 10mm;
+        }
+
+        .header-center {
             text-align: center;
+            flex-grow: 1;
+        }
+
+        .header-center .title {
             font-size: 14pt;
             font-weight: bold;
             margin: 0;
-            padding-bottom: 10px;
         }
 
-        table {
+        .header-center .number {
+            font-size: 9pt;
+            margin-top: 2mm;
+        }
+
+        .field-group {
+            margin-bottom: 2mm;
+            font-size: 9pt;
+        }
+
+        .field-group p {
+            margin: 1mm 0;
+            border-bottom: 1px solid #000;
+            padding-bottom: 1px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin: 5mm 0 2mm;
+            font-size: 10pt;
+        }
+
+        .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px;
+            margin-bottom: 2mm;
+            font-size: 9pt;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
-            text-align: left;
-            vertical-align: top;
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 2px 4px;
+            text-align: center;
         }
 
-        th {
-            background-color: #f7f7f7;
+        .table th {
+            background-color: #f2f2f2;
             font-weight: bold;
         }
 
-        .signature-section {
-            margin-top: 20px;
+        .signatures {
+            margin-top: 3mm;
+            font-size: 9pt;
+        }
+
+        .signature {
+            margin-bottom: 3mm;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 10mm;
         }
 
         .footer {
-            margin-top: 10px;
-            font-size: 9pt;
+            text-align: center;
+            margin-top: 30mm;
+            font-size: 8pt;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <img class="logo" src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
-    </div>
+    <div class="container">
+        <div class="header">
+            <img class="logo" src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo">
+            <div class="header-right">
+                {{ document.created_at|date:"Y-m-d H:i" }} <br>(data ir laikas)
+            </div>
+        </div>
+        <div class="content">
+            <div class="header-center">
+                <div class="title">MOBILIOS ALKŪNINĖS DARBO PLATFORMOS PRIĖMIMO-PERDAVIMO AKTAS</div>
+                <div class="number">Nr.: {{ document.document_number }}<br><br><br><br></div>
+            </div>
 
-    <h1 class="title">MOBILIOS ALKŪNINĖS DARBO PLATFORMOS, PRIĖMIMO - PERDAVIMO AKTAS</h1>
+            <div class="field-group">
+                <p><strong>Užsakovas:</strong> {{ document.client_name|default:"-" }} (Kodas: {{ document.client_code|default:"-" }})</p>
+                <p><strong>Telefonas:</strong> {{ document.phone|default:"-" }}</p>
+                <p><strong>El. Paštas:</strong> {{ document.email|default:"-" }}</p>
+                <p><strong>Objekto pavadinimas, adresas:</strong> {{ document.project_address|default:"-" }}</p>
+                <p><strong>Pravažiuota kilometrų:</strong> {{ document.distance|default:"-" }}</p>
+                <p><strong>Pristatymas / išvežimas:</strong> {{ document.delivery_info|default:"-" }}</p>
+                <p><strong>Įrangą pristatęs asmuo:</strong> {{ document.delivered_by|default:"-" }}</p>
+                <p><strong>Įrangą priėmęs asmuo:</strong> {{ document.received_by|default:"-" }}</p>
+            </div>
 
-    <!-- Kliento informacija -->
-    <table>
-        <tr>
-            <th>Užsakovas</th>
-            <td>{{ document.client_name }}</td>
-            <th>Užsakovo kodas</th>
-            <td>{{ document.client_code }}</td>
-        </tr>
-        <tr>
-            <th>Telefonas</th>
-            <td>{{ document.phone }}</td>
-            <th>El. Paštas</th>
-            <td>{{ document.email }}</td>
-        </tr>
-        <tr>
-            <th>Objekto pavadinimas, adresas</th>
-            <td>{{ document.project_address }}</td>
-            <th>Pravažiuota kilometrų</th>
-            <td>{{ document.distance }}</td>
-        </tr>
-    </table>
+            <div>
+                <div class="section-title">DUOMENYS APIE ĮRANGĄ:</div>
+                <table class="table">
+                    <tr>
+                        <th>Eil. Nr.</th>
+                        <th>Markė / Modelis</th>
+                        <th>Valstybinis Nr.</th>
+                        <th>Keliamoji galia</th>
+                        <th>Paros kaina</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>{{ document.model|default:"-" }}</td>
+                        <td>{{ document.registration_number|default:"-" }}</td>
+                        <td>{{ document.lifting_capacity|default:"-" }}</td>
+                        <td>{{ document.daily_price|default:"0.00" }} € + PVM</td>
+                    </tr>
+                </table>
+            </div>
 
-    <!-- Nuomotojo informacija -->
-    <table>
-        <tr>
-            <th>Įrangą pristatęs asmuo</th>
-            <td>{{ document.delivered_by }}</td>
-            <th>Įrangą priėmęs asmuo</th>
-            <td>{{ document.received_by }}</td>
-        </tr>
-    </table>
+            <div class="field-group">
+                <p><strong>Kilometro kaina:</strong> {{ document.km_price|default:"0.00" }} € + PVM</p>
+                <p><strong>Dirbta parų:</strong> {{ document.days_worked|default:"0" }}</p>
+                <p><strong>Nuomos pradžios / pabaigos data:</strong> {{ document.start_date|date:"Y-m-d" }} / {{ document.end_date|date:"Y-m-d"|default:"-" }}</p>
+                <p><strong>Pristatymo mokestis:</strong> {{ document.transport_price_delivery|default:"0.00" }} €</p>
+                <p><strong>Išvežimo mokestis:</strong> {{ document.transport_price_pickup|default:"0.00" }} €</p>
+            </div>
 
-    <!-- Techniniai duomenys -->
-    <table>
-        <tr>
-            <th>Markė / Modelis</th>
-            <td>{{ document.model }}</td>
-            <th>Valstybinis Nr.</th>
-            <td>{{ document.registration_number }}</td>
-        </tr>
-        <tr>
-            <th>Keliamoji galia, strėlės siekis</th>
-            <td>{{ document.lifting_capacity }}</td>
-            <th>Paros kaina</th>
-            <td>{{ document.daily_price }} + PVM</td>
-        </tr>
-        <tr>
-            <th>Kilometro kaina</th>
-            <td>{{ document.km_price }} + PVM</td>
-            <th>Dirbta parų</th>
-            <td>{{ document.days_worked }}</td>
-        </tr>
-        <tr>
-            <th>Nuomos pradžios / pabaigos data</th>
-            <td>{{ document.start_date }} / {{ document.end_date }}</td>
-            <th>Pristatymas / išvežimas</th>
-            <td>{{ document.delivery_info }}</td>
-        </tr>
-    </table>
+            <div class="signatures">
+                <div class="signature">
+                    Įrangą pristatęs asmuo:<br>
+                    <br><br><br>
+                    ____________________________________<br>(vardas pavardė, parašas)
+                </div>
+                <div class="signature">
+                    Nuomininko vardu (Su mechanizmo naudojimo instrukcija susipažinau ir ją gavau):<br>
+                    <br><br><br>
+                    ______________________________<br>(vardas pavardė)
+                </div>
+            </div>
 
-    <div class="signature-section">
-        <p>Nuomotojo įrangą pristačiusio asmens parašas: ______________________</p>
-        <p>(Pareigos, vardas, pavardė, parašas)</p>
-    </div>
-
-    <div class="footer">
-        <p>Minimalus mokestis už įrangos pristatymą {{ document.transport_price_delivery|default:"-" }} €, išvežimą {{ document.transport_price_pickup|default:"-" }} €, +PVM</p>
-        <p>Nuomininko vardu (Su mechanizmo naudojimo instrukcija susipažinau ir ją gavau): ______________________</p>
+            <div class="footer">
+                Sukurta naudojant Dokumentų Valdymo Sistemą
+            </div>
+        </div>
     </div>
 </body>
 </html>

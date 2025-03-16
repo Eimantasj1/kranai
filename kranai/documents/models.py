@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Vehicle(models.Model):
+    registration_number = models.CharField("Valstybinis numeris", max_length=20, unique=True)
+    model = models.CharField("Transporto priemonės modelis", max_length=50)
+
+    def __str__(self):
+        return self.registration_number
+
 class Document(models.Model):
     # Dokumento tipų pasirinkimai
     DOCUMENT_TYPE_CHOICES = [
@@ -18,8 +25,12 @@ class Document(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="documents")
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # **📌 Pridėti trūkstami krovinio važtaraščio laukai**
-    carrier_name = models.CharField("Vežėjas", max_length=255, blank=True, null=True)
+    carrier_name = models.CharField(
+        "Vežėjo pavadinimas ir adresas",
+        max_length=255,
+        default="UAB ,,KĖDAINIŲ KRANAI‘‘ Įmonės kodas 302742708 Parko g. 20, Juodkaimių k. Kėdainių r.",
+        editable=False
+    )
     driver_name = models.CharField("Vairuotojo vardas", max_length=255, blank=True, null=True)
     loading_location = models.CharField("Pakrovimo vieta", max_length=255, blank=True, null=True)
     unloading_location = models.CharField("Iškrovimo vieta", max_length=255, blank=True, null=True)
@@ -35,7 +46,7 @@ class Document(models.Model):
 
     # Platformos akto laukai
     model = models.CharField("Markė/Modelis", max_length=255, blank=True, null=True)
-    registration_number = models.CharField("Valstybinis numeris", max_length=100, blank=True, null=True)
+    registration_number = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Valstybinis numeris")
     client_name = models.CharField("Užsakovas", max_length=255, blank=True, null=True)
     lifting_capacity = models.CharField("Keliamoji galia, strėlės siekis", max_length=100, blank=True, null=True)
     days_worked = models.PositiveIntegerField("Dirbtos paros", blank=True, null=True)
@@ -57,6 +68,11 @@ class Document(models.Model):
     transport_price_pickup = models.DecimalField(
         "Išvežimo mokestis (€)", max_digits=10, decimal_places=2, blank=True, null=True
     )
+
+    def save(self, *args, **kwargs):
+        if not self.driver_name:
+            self.driver_name = f"{self.created_by.first_name} {self.created_by.last_name}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.get_document_type_display()} - {self.document_number}"

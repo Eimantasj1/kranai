@@ -21,6 +21,7 @@ def document_create_freight(request):
         if form.is_valid():
             document = form.save(commit=False)
             document.created_by = request.user
+            document.driver_name = f"{request.user.first_name} {request.user.last_name}"
             document.document_type = 'freight'
             document.save()
             return redirect('document_list')
