@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:pk>/delete/', views.document_delete, name='document_delete'),  # Dokumento ištrynimas
     path('<int:pk>/pdf/', views.render_pdf_view, name='document_pdf'),  # Dokumento PDF atsisiuntimas
     path('<int:pk>/view/', views.render_pdf_view, {'preview': True}, name='document_view'),  # Dokumento peržiūra
+    path('get_vehicle_model/', views.get_vehicle_model, name='get_vehicle_model'),  # AJAX užklausa gauti transporto priemonės modelį
 ]

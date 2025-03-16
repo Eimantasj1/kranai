@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from weasyprint import HTML
-from .models import Document
+from .models import Document, Vehicle
 from .forms import FreightBillForm, PlatformTransferForm
 
 # Dokumento tipo pasirinkimas
@@ -41,13 +41,17 @@ def document_create_platform(request):
             document.created_by = request.user
             document.document_type = 'platform'
             document.delivered_by = f"{request.user.first_name} {request.user.last_name}"  # Automatinis priskyrimas
+
+            # Automatiškai priskiriame modelį pagal pasirinktą numerį
+            if document.registration_number:
+                document.model = document.registration_number.model  # Automatinis modelio užpildymas
+            
             document.save()
             return redirect('document_list')
     else:
         form = PlatformTransferForm()
     
     return render(request, 'documents/document_form.html', {'form': form, 'title': 'Platformos Priėmimo-Perdavimo Aktas'})
-
 
 # Dokumentų sąrašas
 @login_required
@@ -107,3 +111,14 @@ def document_delete(request, pk):
     document = get_object_or_404(Document, pk=pk)
     document.delete()
     return redirect('document_list')
+
+
+def get_vehicle_model(request):
+    registration_number = request.GET.get('registration_number')
+    if registration_number:
+        try:
+            vehicle = Vehicle.objects.get(id=registration_number)
+            return JsonResponse({'Model': vehicle.model})
+        except Vehicle.DoesNotExist:
+            return JsonResponse({'Model': ''})  # Jei neranda modelio, grąžina tuščią
+    return JsonResponse({'Model': ''})

@@ -42,14 +42,14 @@ class PlatformTransferForm(forms.ModelForm):
     )
 
     model = forms.CharField(
-        widget=forms.TextInput(attrs={'readonly': 'readonly', 'class': 'form-control', 'id': 'vehicle-model'}),
+        widget=forms.HiddenInput(attrs={'readonly': 'readonly', 'class': 'form-control', 'id': 'vehicle-model'}),
         required=False
     )
 
     class Meta:
         model = Document
         fields = [
-            'document_number', 'model', 'registration_number', 
+            'document_number', 'registration_number', 
             'client_name', 'lifting_capacity', 'days_worked', 'daily_price',
             'start_date', 'end_date', 'km_price', 'client_code', 
             'received_by', 'distance', 'delivery_info',
@@ -57,7 +57,6 @@ class PlatformTransferForm(forms.ModelForm):
         ]
         labels = {
             'document_number': 'Dokumento numeris',
-            'model': 'Markė/Modelis',
             'registration_number': 'Valstybinis numeris',
             'client_name': 'Užsakovas',
             'lifting_capacity': 'Keliamoji galia, strėlės siekis',

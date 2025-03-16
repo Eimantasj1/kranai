@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Vehicle(models.Model):
-    registration_number = models.CharField("Valstybinis numeris", max_length=20, unique=True)
-    model = models.CharField("Transporto priemonės modelis", max_length=50)
+    registration_number = models.CharField("Valstybinis numeris", max_length=10, unique=True)
+    model = models.CharField(max_length=50)
 
     def __str__(self):
         return self.registration_number
