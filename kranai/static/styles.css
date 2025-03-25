@@ -177,3 +177,7 @@ footer {
     font-weight: bold;
     margin-top: 10px;
 }
+
+main {
+    padding-bottom: 100px;
+}

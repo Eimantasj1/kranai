@@ -1,14 +1,39 @@
 {% extends "base.html" %}
 
-{% block title %}Naujas Dokumentas{% endblock %}
+{% block title %}{{ title|default:"Naujas Dokumentas" }}{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">
+        {% if form.instance.pk %}
+            Redaguoti Dokumentą
+        {% else %}
+            Naujas Dokumentas
+        {% endif %}
+    </h2>
 
-<h2>{% if form.instance.pk %}Redaguoti Dokumentą{% else %}Naujas Dokumentas{% endif %}</h2>
-<form method="post">
-   {% csrf_token %}
-   {{ form.as_p }}
-   <button type="submit">Išsaugoti</button>
-</form>
-<a href="{% url 'document_list' %}">Atgal į sąrašą</a>
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="mb-3 row">
+            <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}:</label>
+            <div class="col-sm-9">
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Išsaugoti</button>
+            <a href="{% url 'document_list' %}" class="btn btn-secondary ms-2">Atgal į sąrašą</a>
+        </div>
+    </form>
+</div>
 {% endblock %}
